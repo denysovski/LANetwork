@@ -22,7 +22,7 @@
 6. [Postup krok za krokem](#6-postup-krok-za-krokem)
 7. [Testování – jak jsem ověřil, že vše funguje](#7-testování--jak-jsem-ověřil-že-vše-funguje)
 8. [Užitečné show příkazy](#8-užitečné-show-příkazy)
-9. [Na co si dát pozor (časté chyby)](#9-na-co-si-dát-pozor-časté-chyby)
+9. [Na co jsem si dával pozor](#9-na-co-jsem-si-dával-pozor)
 10. [Kontrola splnění zadání](#10-kontrola-splnění-zadání)
 
 ---
@@ -449,7 +449,9 @@ show running-config
 
 ---
 
-## 9. Na co si dát pozor (časté chyby)
+## 9. Na co jsem si dával pozor
+
+Tohle **nejsou chyby v mém projektu** – v síti je všechno nastavené správně. Jsou to místa, kde se při takové konfiguraci často chybuje, takže je dobré je při opakování nebo hledání problému zkontrolovat jako první.
 
 - **Porty routeru jsou ve výchozím stavu vypnuté** – bez `no shutdown` na Gi0/0/0 a Gi0/0/1 nic nefunguje.
 - **`encapsulation dot1Q` musí být před `ip address`** na subrozhraní, jinak IP nejde zadat.
