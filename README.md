@@ -75,7 +75,7 @@ Jen to nejdůležitější, co se v práci objevuje:
 
 ---
 
-## 3. Zadání v kostce
+## 3. Zadání
 
 - 1× router **R1** (ISR4321), 1× switch **S1** (2960-24TT), 2× PC (**PC1**, **PC2**).
 - Na S1 dvě VLAN: **110 Office** a **210 Factory**, každé PC v jiné VLAN (access port).
