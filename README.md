@@ -189,7 +189,7 @@ Ikony CN části jsem v logickém pohledu jen posunul doprava, aby se moje síť
 
 ## 6. Postup krok za krokem
 
-### Krok 1 – Příprava souboru a zařízení
+### Příprava souboru a zařízení
 
 1. Otevřel jsem výchozí soubor z Moodle (`zadani/BPSW_Vychozi_topologie_CN.pkt`) a uložil ho pod novým jménem `BPSW_Semestralni_prace_Daniel_Svoboda.pkt`.
 2. Z dolní lišty jsem přidal:
@@ -198,11 +198,11 @@ Ikony CN části jsem v logickém pohledu jen posunul doprava, aby se moje síť
    - **End Devices → PC** → 2× (PC1, PC2)
 3. Každé zařízení jsem přejmenoval (kliknout na zařízení → záložka **Config** → *Display Name*). Hostname na R1/S1 nastavuji příkazem `hostname` v CLI.
 
-### Krok 2 – Kabeláž
+### Kabeláž
 
 Nástroj **Connections (blesk) → Copper Straight-Through** (pro R1–CR1 **Copper Cross-Over**), pak kliknout na zařízení a vybrat port. Zapojení viz [kapitola 5](#5-zapojení--co-je-s-čím-propojené). Po zapojení jsou kontrolky oranžové (STP) a po chvíli zelené. Kontrolky k R1 jsou červené, dokud na routeru nedám `no shutdown` (porty routeru jsou ve výchozím stavu vypnuté).
 
-### Krok 3 – Konfigurace switche S1
+### Konfigurace switche S1
 
 Kliknout na S1 → záložka **CLI**. Celé příkazy jsou v [`konfigurace/S1_prikazy.txt`](konfigurace/S1_prikazy.txt). Po částech:
 
@@ -257,7 +257,7 @@ ip default-gateway 10.0.110.1
 ```
 `ip default-gateway` je nutná, aby switch odpověděl i zařízením z jiné sítě (např. na SSH z PC2 ve VLAN 210).
 
-### Krok 4 – Konfigurace routeru R1
+### Konfigurace routeru R1
 
 Kliknout na R1 → **CLI**. Celé příkazy v [`konfigurace/R1_prikazy.txt`](konfigurace/R1_prikazy.txt).
 
@@ -312,7 +312,7 @@ ip route 192.168.8.0 255.255.255.0 192.168.0.254
 ```
 Čtu to: „do sítě 192.168.8.0/24 posílej přes 192.168.0.254 (CR1)“. Cesta zpátky už v CN existuje – CR1 má výchozí cestu `0.0.0.0/0 → 192.168.0.1` (můj R1), takže odpovědi do sítí 10.0.x.0 dorazí.
 
-### Krok 5 – Nastavení PC1 a PC2
+### Nastavení PC1 a PC2
 
 Kliknout na PC → **Desktop → IP Configuration** → přepnout na **DHCP**. Po chvíli se objeví „DHCP request successful“ a PC dostane:
 
@@ -321,7 +321,7 @@ Kliknout na PC → **Desktop → IP Configuration** → přepnout na **DHCP**. P
 
 Pokud se adresa nepřidělí (169.254.x.x nebo prázdné), přepnout na Static a zpět na DHCP.
 
-### Krok 6 – Zabezpečení přes SSH (R1 i S1)
+### Zabezpečení přes SSH (R1 i S1)
 
 Stejné příkazy na obou zařízeních (v konfiguračním režimu):
 ```
@@ -345,14 +345,14 @@ line vty 0 15
  login local
  transport input ssh
 ```
-- `enable secret cisco` (krok 3/4) = heslo pro enable režim.
+- `enable secret cisco` (viz konfigurace S1 a R1) = heslo pro enable režim.
 - `password cisco` na VTY + `service password-encryption` = heslo pro VTY, v konfiguraci je zašifrované (`password 7 ...`).
 - `login local` = při přihlášení se ptá na uživatele `admin` a jeho heslo.
 - `transport input ssh` = Telnet je zakázaný, jde jen SSH.
 - Bez `ip domain-name` RSA klíč nejde vygenerovat (klíč se pojmenuje `R1.upce.net` / `S1.upce.net`).
 - `ip ssh version 2` – po vygenerování klíče 1024 bitů je možné zapnout novější SSH verze 2.
 
-### Krok 7 – Uložení
+### Uložení
 
 Na R1 i S1:
 ```
