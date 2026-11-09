@@ -3,8 +3,8 @@
 **Zprovoznění jednoduché LAN sítě v programu Cisco Packet Tracer**
 
 - Autor: **Daniel Svoboda**
-- Předmět: BPSW – Počítačové sítě, Univerzita Pardubice, FEI
-- Vyučující: Václav Hraban
+- Předmět: BPSW, Počítačové sítě, Univerzita Pardubice, FEI
+- Vyučující: RNDr. Václav Hrabaň
 - Moje pořadí v seznamu studentů: **10** → VLAN **110** (Office) a **210** (Factory)
 - Program: Cisco Packet Tracer 9.0.1.0858
 
