@@ -497,7 +497,7 @@ Kompletní písemná dokumentace je ve složce [`dokumentace/`](dokumentace/):
 - 📄 [BPSW_Semestralni_prace_Daniel_Svoboda.docx](dokumentace/BPSW_Semestralni_prace_Daniel_Svoboda.docx) – Word (ke stažení a úpravám)
 - 📕 [BPSW_Semestralni_prace_Daniel_Svoboda.pdf](dokumentace/BPSW_Semestralni_prace_Daniel_Svoboda.pdf) – PDF (dá se prohlédnout přímo na GitHubu)
 
-Dokumentace má 26 stran a obsahuje:
+Dokumentace má 27 stran a obsahuje:
 
 - úvod a zadání semestrální práce,
 - slovníček základních pojmů a zkratek,
