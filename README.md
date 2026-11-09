@@ -317,39 +317,39 @@ copy running-config startup-config
 
 Testy jsem dělal z **PC → Desktop → Command Prompt**. Před testy je dobré chvíli počkat (nebo několikrát kliknout na **Fast Forward Time** dole), aby doběhlo DHCP a STP. První ping může mít 1 timeout kvůli ARP – to je normální.
 
-**Test 1 – PC dostalo adresu z DHCP**
+**PC dostalo adresu z DHCP**
 ```
 PC1> ipconfig /all
 ```
 Očekávám IP `10.0.110.10`, Default Gateway `10.0.110.1`, DNS Servers `192.168.8.10`. Na PC2 stejně s `10.0.210.x`.
 
-**Test 2 – ping na výchozí bránu**
+**Ping na výchozí bránu**
 ```
 PC1> ping 10.0.110.1
 PC2> ping 10.0.210.1
 ```
 
-**Test 3 – ping mezi PC (přes router, mezi VLAN)**
+**Ping mezi PC (přes router, mezi VLAN)**
 ```
 PC1> ping 10.0.210.10
 PC2> ping 10.0.110.10
 ```
 
-**Test 4 – ping do Corporate NET na IP**
+**Ping do Corporate NET na IP**
 ```
 PC1> ping 192.168.8.10
 PC2> ping 192.168.8.10
 ```
 Ověřuje statickou cestu na R1 i zpáteční cestu na CR1.
 
-**Test 5 – ping na jméno (DNS)**
+**Ping na jméno (DNS)**
 ```
 PC1> ping fs1
 PC1> ping fs1.corporate.net
 ```
 Ve výpisu je vidět „Pinging 192.168.8.10“ – jméno se přeložilo přes DNS server 192.168.8.10. Totéž z PC2.
 
-**Test 6 – SSH na switch a router**
+**SSH na switch a router**
 ```
 PC1> ssh -l admin 10.0.110.2
 Password: cisco
@@ -369,7 +369,7 @@ PC1> telnet 10.0.110.1
 ```
 (spojení se odmítne, protože VTY povolují jen SSH).
 
-**Test 7 – kontrola na zařízeních** – viz další kapitola (`show vlan brief`, `show interfaces trunk`, `show ip dhcp binding`, `show ip route`, `show ip ssh`).
+**Kontrola na zařízeních** – viz další kapitola (`show vlan brief`, `show interfaces trunk`, `show ip dhcp binding`, `show ip route`, `show ip ssh`).
 
 **Alternativně v simulaci:** ikona obálky (**Add Simple PDU**) – kliknout na PC1 a pak na FS1, v pravém dolním panelu musí být *Successful*.
 
