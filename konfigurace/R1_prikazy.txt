@@ -1,0 +1,74 @@
+! =====================================================================
+!  R1 (ISR4321) – prikazy zadane v CLI
+!  BPSW semestralni prace – Daniel Svoboda (XX = 10)
+!  Vlozit postupne do CLI routeru (zalozka CLI v Packet Traceru)
+! =====================================================================
+
+enable
+configure terminal
+
+! --- 1) Zakladni nastaveni a hesla --------------------------------------
+hostname R1
+enable secret cisco
+service password-encryption
+no ip domain-lookup
+
+! --- 2) Rozhrani smerem do LAN (trunk ke S1) – router-on-a-stick ---------
+interface GigabitEthernet0/0/0
+ description Trunk do S1
+ no shutdown
+ exit
+
+interface GigabitEthernet0/0/0.110
+ description VLAN 110 - Office
+ encapsulation dot1Q 110
+ ip address 10.0.110.1 255.255.255.0
+ exit
+
+interface GigabitEthernet0/0/0.210
+ description VLAN 210 - Factory
+ encapsulation dot1Q 210
+ ip address 10.0.210.1 255.255.255.0
+ exit
+
+! --- 3) Rozhrani smerem do Corporate NET (CR1) -------------------------
+interface GigabitEthernet0/0/1
+ description Uplink do CN (CR1 Gi0/0/1)
+ ip address 192.168.0.1 255.255.255.0
+ no shutdown
+ exit
+
+! --- 4) DHCP server pro obe VLAN (adresy od .10) -----------------------
+ip dhcp excluded-address 10.0.110.1 10.0.110.9
+ip dhcp excluded-address 10.0.210.1 10.0.210.9
+
+ip dhcp pool Office
+ network 10.0.110.0 255.255.255.0
+ default-router 10.0.110.1
+ dns-server 192.168.8.10
+ exit
+
+ip dhcp pool Factory
+ network 10.0.210.0 255.255.255.0
+ default-router 10.0.210.1
+ dns-server 192.168.8.10
+ exit
+
+! --- 5) Staticka cesta do /24 site CN (DNS a FS1) ----------------------
+ip route 192.168.8.0 255.255.255.0 192.168.0.254
+
+! --- 6) Zabezpeceni – SSH ---------------------------------------------
+ip domain-name upce.net
+username admin secret cisco
+crypto key generate rsa
+! na dotaz "How many bits in the modulus [512]:" napsat 1024
+ip ssh version 2
+
+line vty 0 4
+ password cisco
+ login local
+ transport input ssh
+ exit
+
+end
+copy running-config startup-config

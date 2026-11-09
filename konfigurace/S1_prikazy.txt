@@ -1,0 +1,67 @@
+! =====================================================================
+!  S1 (Catalyst 2960-24TT) – prikazy zadane v CLI
+!  BPSW semestralni prace – Daniel Svoboda (XX = 10)
+! =====================================================================
+
+enable
+configure terminal
+
+! --- 1) Zakladni nastaveni a hesla --------------------------------------
+hostname S1
+enable secret cisco
+service password-encryption
+no ip domain-lookup
+
+! --- 2) VLAN ---------------------------------------------------------
+vlan 110
+ name Office
+ exit
+vlan 210
+ name Factory
+ exit
+
+! --- 3) Access porty pro koncove stanice + PortFast --------------------
+interface FastEthernet0/1
+ description PC1 - Office
+ switchport mode access
+ switchport access vlan 110
+ spanning-tree portfast
+ exit
+
+interface FastEthernet0/2
+ description PC2 - Factory
+ switchport mode access
+ switchport access vlan 210
+ spanning-tree portfast
+ exit
+
+! --- 4) Trunk smerem k R1 (bez PortFast!) ------------------------------
+interface GigabitEthernet0/1
+ description Trunk do R1
+ switchport mode trunk
+ switchport trunk allowed vlan 110,210
+ exit
+
+! --- 5) Management rozhrani a vychozi brana switche --------------------
+interface Vlan110
+ description Management S1
+ ip address 10.0.110.2 255.255.255.0
+ no shutdown
+ exit
+ip default-gateway 10.0.110.1
+
+! --- 6) Zabezpeceni – SSH ---------------------------------------------
+ip domain-name upce.net
+username admin secret cisco
+crypto key generate rsa
+! na dotaz "How many bits in the modulus [512]:" napsat 1024
+ip ssh version 2
+
+line vty 0 15
+ password cisco
+ login local
+ transport input ssh
+ exit
+
+end
+copy running-config startup-config

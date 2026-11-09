@@ -1,0 +1,102 @@
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname R1
+!
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+!
+ip dhcp excluded-address 10.0.110.1 10.0.110.9
+ip dhcp excluded-address 10.0.210.1 10.0.210.9
+!
+ip dhcp pool Office
+ network 10.0.110.0 255.255.255.0
+ default-router 10.0.110.1
+ dns-server 192.168.8.10
+ip dhcp pool Factory
+ network 10.0.210.0 255.255.255.0
+ default-router 10.0.210.1
+ dns-server 192.168.8.10
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+username admin secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+!
+!
+!
+!
+!
+!
+!
+ip ssh version 2
+no ip domain-lookup
+ip domain-name upce.net
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ description Trunk do S1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/0.110
+ description VLAN 110 - Office
+ encapsulation dot1Q 110
+ ip address 10.0.110.1 255.255.255.0
+!
+interface GigabitEthernet0/0/0.210
+ description VLAN 210 - Factory
+ encapsulation dot1Q 210
+ ip address 10.0.210.1 255.255.255.0
+!
+interface GigabitEthernet0/0/1
+ description Uplink do CN (CR1 Gi0/0/1)
+ ip address 192.168.0.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 192.168.8.0 255.255.255.0 192.168.0.254 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ password 7 0822455D0A16
+ login local
+ transport input ssh
+!
+!
+!
+end
