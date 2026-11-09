@@ -25,6 +25,7 @@
 9. [Na co jsem si dával pozor](#9-na-co-jsem-si-dával-pozor)
 10. [Kontrola splnění zadání](#10-kontrola-splnění-zadání)
 11. [Dokumentace semestrální práce (Word / PDF)](#11-dokumentace-semestrální-práce-word--pdf)
+12. [Návrh schémat ve Figmě](#12-návrh-schémat-ve-figmě)
 
 ---
 
@@ -42,7 +43,7 @@ LANetwork/
 ├── dokumentace/
 │   ├── BPSW_Semestralni_prace_Daniel_Svoboda.docx ← písemná dokumentace práce (Word)
 │   └── BPSW_Semestralni_prace_Daniel_Svoboda.pdf  ← stejná dokumentace v PDF
-├── obrazky/                                       ← schémata pro README a dokumentaci
+├── obrazky/                                       ← schémata (návrh ve Figmě) pro README a dokumentaci
 └── zadani/
     ├── BPSW_Zadani_semestralni_prace.pdf          ← zadání od vyučujícího
     └── BPSW_Vychozi_topologie_CN.pkt              ← výchozí soubor z Moodle (jen CN část)
@@ -312,6 +313,8 @@ ip route 192.168.8.0 255.255.255.0 192.168.0.254
 ```
 Čtu to: „do sítě 192.168.8.0/24 posílej přes 192.168.0.254 (CR1)“. Cesta zpátky už v CN existuje – CR1 má výchozí cestu `0.0.0.0/0 → 192.168.0.1` (můj R1), takže odpovědi do sítí 10.0.x.0 dorazí.
 
+![Cesta pingu](obrazky/cesta_ping.png)
+
 ### Nastavení PC1 a PC2
 
 Kliknout na PC → **Desktop → IP Configuration** → přepnout na **DHCP**. Po chvíli se objeví „DHCP request successful“ a PC dostane:
@@ -506,3 +509,13 @@ Dokumentace má 27 stran a obsahuje:
 - zabezpečení přes SSH,
 - testování (ping, DNS, SSH) a použité show příkazy,
 - přehled splnění zadání, závěr, seznam zkratek, obrázků a tabulek.
+
+---
+
+## 12. Návrh schémat ve Figmě
+
+Všechna tři schémata (topologie, VLAN a IP adresace, cesta pingu) jsou navržená ve Figmě v černozeleném stylu:
+
+🎨 [LANetwork – BPSW diagramy (Figma)](https://www.figma.com/design/dNQKj5H7UZjJgOHQo1jPiT)
+
+Exporty jsou ve složce [`obrazky/`](obrazky/) a stejné obrázky jsou použité i ve Word/PDF dokumentaci.
