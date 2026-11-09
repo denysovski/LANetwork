@@ -24,6 +24,7 @@
 8. [Užitečné show příkazy](#8-užitečné-show-příkazy)
 9. [Na co jsem si dával pozor](#9-na-co-jsem-si-dával-pozor)
 10. [Kontrola splnění zadání](#10-kontrola-splnění-zadání)
+11. [Dokumentace semestrální práce (Word / PDF)](#11-dokumentace-semestrální-práce-word--pdf)
 
 ---
 
@@ -486,3 +487,22 @@ Tohle **nejsou chyby v mém projektu** – v síti je všechno nastavené správ
 - [x] VTY: transport input ssh + login local
 - [x] SSH z PC na S1 a R1
 - [x] CN část beze změny konfigurace
+
+---
+
+## 11. Dokumentace semestrální práce (Word / PDF)
+
+Kompletní písemná dokumentace je ve složce [`dokumentace/`](dokumentace/):
+
+- 📄 [BPSW_Semestralni_prace_Daniel_Svoboda.docx](dokumentace/BPSW_Semestralni_prace_Daniel_Svoboda.docx) – Word (ke stažení a úpravám)
+- 📕 [BPSW_Semestralni_prace_Daniel_Svoboda.pdf](dokumentace/BPSW_Semestralni_prace_Daniel_Svoboda.pdf) – PDF (dá se prohlédnout přímo na GitHubu)
+
+Dokumentace má 26 stran a obsahuje:
+
+- úvod a zadání semestrální práce,
+- slovníček základních pojmů a zkratek,
+- návrh topologie, zapojení kabelů a adresní plán (VLAN, IP),
+- postup konfigurace krok za krokem s vysvětlením každého příkazu,
+- zabezpečení přes SSH,
+- testování (ping, DNS, SSH) a použité show příkazy,
+- přehled splnění zadání, závěr, seznam zkratek, obrázků a tabulek.
