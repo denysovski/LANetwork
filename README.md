@@ -55,76 +55,23 @@ Odevzdání: soubor `.pkt` mailem na vaclav.hraban@upce.cz do **14. 12. 16:00**,
 
 ## 2. Slovníček pojmů a zkratek
 
-Tady jsou všechny pojmy, které se v práci objevují, vysvětlené tak, abych si je za čas rychle připomněl.
+Jen to nejdůležitější, co se v práci objevuje:
 
-**Zařízení**
-
-- **Router (směrovač)** – zařízení, které propojuje *různé IP sítě* a rozhoduje, kudy poslat paket dál (podle směrovací tabulky). Pracuje na 3. vrstvě (síťová, IP adresy). U mě R1 (Cisco ISR4321).
-- **Switch (přepínač)** – propojuje zařízení *v rámci jedné sítě (LAN)*. Rámce posílá podle MAC adres. Pracuje na 2. vrstvě (linková). Umí rozdělit porty do VLAN. U mě S1 (Cisco Catalyst 2960-24TT).
-- **Koncová stanice (host, PC)** – počítač, který síť používá. U mě PC1 a PC2.
-- **Server** – počítač poskytující služby. Tady FS1 (file server), který zároveň běží jako DNS server.
-- **ISR (Integrated Services Router)** – řada routerů Cisco (ISR4321, ISR4331).
-- **Catalyst 2960** – řada přístupových switchů Cisco.
-
-**Sítě a části zadání**
-
-- **LAN (Local Area Network)** – lokální síť, např. síť jednoho oddělení nebo budovy.
-- **DN (Department NET)** – moje síť oddělení (PC1, PC2, S1, R1).
-- **CN (Corporate NET)** – „firemní“ síť, kterou jsme dostali hotovou (CR1, CS1, FS1). Nic se v ní nemění.
-- **VLAN (Virtual LAN)** – logické rozdělení jednoho fyzického switche na více oddělených sítí. Zařízení v různých VLAN spolu bez routeru nemluví. VLAN má číslo (ID) a jméno.
-- **VLAN ID** – číslo VLAN (1–4094). U mě 110 a 210.
-- **Native VLAN** – VLAN, jejíž rámce jdou po trunku *bez* tagu (výchozí je VLAN 1).
-
-**Adresace**
-
-- **IP adresa** – adresa zařízení v síti, např. `10.0.110.10`.
-- **Maska podsítě (subnet mask)** – říká, která část IP adresy je síť a která je zařízení. `255.255.255.0` = `/24`.
-- **/24 (prefix, CIDR zápis)** – počet bitů masky. `/24` = prvních 24 bitů je síť, zbylých 8 bitů pro zařízení (254 použitelných adres).
-- **Subnet (podsíť)** – rozsah adres, např. `10.0.110.0/24` = adresy `10.0.110.0` až `10.0.110.255`.
-- **GW (Gateway, výchozí brána)** – adresa routeru ve vlastní síti. Když PC posílá něco *mimo* svou síť, pošle to na bránu. U mě vždy adresa končící `.1`.
-- **MAC adresa** – fyzická (hardwarová) adresa síťové karty, např. `0090.2B12.3456`.
-
-**Služby a protokoly**
-
-- **DHCP (Dynamic Host Configuration Protocol)** – automatické přidělování IP adresy, masky, brány a DNS počítačům. U mě běží DHCP server přímo na routeru R1.
-- **DHCP pool** – „zásobník“ adres, ze kterého DHCP rozdává (jeden pro každou VLAN).
-- **Excluded address** – adresy, které DHCP *nesmí* rozdat (u mě `.1`–`.9`, aby se rozdávalo od `.10`).
-- **DNS (Domain Name System)** – převádí jméno na IP adresu. Díky němu funguje `ping fs1` místo `ping 192.168.8.10`. DNS server je `192.168.8.10`.
-- **Doménové jméno / FQDN** – plné jméno, např. `fs1.corporate.net`.
-- **Statická cesta (static route)** – ručně zadané pravidlo „do sítě X posílej přes souseda Y“.
-- **Výchozí cesta (default route)** – `0.0.0.0/0`, cesta „pro všechno ostatní“. Má ji CR1 směrem k mému R1.
-- **Next hop** – adresa dalšího routeru na cestě (u mě `192.168.0.254` = CR1).
-- **Ping (ICMP echo)** – test dostupnosti: pošle paket a čeká na odpověď.
-- **ARP** – zjišťuje MAC adresu k IP adrese. Kvůli němu někdy první ping „vyprší“ (timeout) a další už projdou.
-
-**Porty a přepínání**
-
-- **Port / rozhraní (interface)** – fyzická zásuvka na zařízení, např. `GigabitEthernet0/0/0` (zkráceně Gi0/0/0) nebo `FastEthernet0/1` (Fa0/1).
-- **Access port** – port switche patřící do *jedné* VLAN. Sem se připojují počítače.
-- **Trunk port** – port, který přenáší *více VLAN najednou*. Rámce označuje tagem 802.1Q. Používá se mezi switchem a routerem (nebo mezi switchi).
-- **802.1Q (dot1Q)** – standard pro označování (tagování) rámců číslem VLAN na trunku.
-- **Subrozhraní (subinterface)** – logické „pod-rozhraní“ jednoho fyzického portu routeru, např. `Gi0/0/0.110`. Každé má vlastní VLAN a vlastní IP (bránu).
-- **Router-on-a-stick** – řešení, kdy jeden fyzický port routeru obsluhuje více VLAN pomocí subrozhraní a trunku. Tak to mám zapojené já.
-- **STP (Spanning Tree Protocol)** – protokol switchů proti smyčkám. Nový port nejdřív ~30 s „poslouchá“, než začne přenášet data.
-- **PortFast** – funkce STP, která port pro koncovou stanici zapne okamžitě (bez čekání). Patří **jen na access porty k počítačům**, nikdy na trunk.
-- **SVI (Switch Virtual Interface)** – virtuální rozhraní switche ve VLAN (`interface Vlan110`). Dává switchi IP adresu pro správu.
-- **Management (správa)** – přístup na zařízení přes síť kvůli konfiguraci.
-
-**Zabezpečení a správa**
-
-- **CLI (Command Line Interface)** – příkazová řádka zařízení Cisco.
-- **IOS** – operační systém zařízení Cisco.
-- **User EXEC (`R1>`)**, **Privileged EXEC (`R1#`)**, **Global config (`R1(config)#`)** – režimy CLI. Do privilegovaného se jde příkazem `enable`, do konfigurace `configure terminal`.
-- **Enable secret** – heslo do privilegovaného režimu (ukládá se zahashované).
-- **service password-encryption** – zašifruje i ostatní hesla v konfiguraci (např. hesla linek), aby nebyla vidět v čitelné podobě.
-- **VTY (Virtual Terminal) linky** – „virtuální terminály“ pro vzdálené připojení (Telnet/SSH). `line vty 0 4` = 5 současných relací.
-- **SSH (Secure Shell)** – šifrované vzdálené připojení do CLI. Bezpečná náhrada Telnetu.
-- **Telnet** – nešifrované vzdálené připojení (nepoužívám, je zakázané).
-- **RSA klíč** – kryptografický klíč, který SSH potřebuje. Generuje se `crypto key generate rsa`, délka 1024 bitů.
-- **ip domain-name** – doménové jméno zařízení. Je potřeba pro vygenerování RSA klíče (klíč se jmenuje `R1.upce.net`).
-- **login local** – přihlášení ověřuje lokální uživatele (`username admin ...`).
-- **transport input ssh** – na VTY linkách povolí jen SSH.
-- **running-config** – aktuální konfigurace v RAM. **startup-config** – uložená konfigurace v NVRAM (načte se po restartu). Ukládá se `copy running-config startup-config` (nebo `wr`).
+- **Router** – propojuje různé sítě a posílá pakety dál (R1, CR1).
+- **Switch** – propojuje zařízení v jedné síti, umí VLAN (S1, CS1).
+- **LAN** – lokální síť. **DN** = moje síť oddělení, **CN** = připravená firemní síť.
+- **VLAN** – logicky oddělená síť na jednom switchi (u mě 110 Office a 210 Factory).
+- **IP adresa / maska /24** – adresa zařízení a velikost sítě (`/24` = `255.255.255.0`).
+- **GW (brána)** – adresa routeru, přes kterou PC posílá data mimo svou síť (končí `.1`).
+- **DHCP** – automaticky přidělí PC adresu, bránu a DNS (běží na R1).
+- **DNS** – překládá jméno na IP adresu (`fs1` → `192.168.8.10`).
+- **Statická cesta** – ručně zadaná trasa do jiné sítě (R1 → síť 192.168.8.0/24).
+- **Access port** – port switche pro jedno PC v jedné VLAN.
+- **Trunk (802.1Q)** – port, který přenáší víc VLAN najednou (S1 ↔ R1).
+- **Subrozhraní** – logická část portu routeru pro jednu VLAN (`Gi0/0/0.110`).
+- **PortFast** – port k PC začne fungovat hned, bez čekání na STP.
+- **SSH** – šifrované vzdálené přihlášení na router/switch (Telnet je zakázaný).
+- **CLI** – příkazová řádka zařízení Cisco.
 
 ---
 
@@ -500,15 +447,14 @@ Kompletní písemná dokumentace je ve složce [`dokumentace/`](dokumentace/):
 - 📄 [BPSW_Semestralni_prace_Daniel_Svoboda.docx](dokumentace/BPSW_Semestralni_prace_Daniel_Svoboda.docx) – Word (ke stažení a úpravám)
 - 📕 [BPSW_Semestralni_prace_Daniel_Svoboda.pdf](dokumentace/BPSW_Semestralni_prace_Daniel_Svoboda.pdf) – PDF (dá se prohlédnout přímo na GitHubu)
 
-Dokumentace má 27 stran a obsahuje:
+Dokumentace má 22 stran a obsahuje:
 
 - úvod a zadání semestrální práce,
-- slovníček základních pojmů a zkratek,
 - návrh topologie, zapojení kabelů a adresní plán (VLAN, IP),
 - postup konfigurace krok za krokem s vysvětlením každého příkazu,
 - zabezpečení přes SSH,
 - testování (ping, DNS, SSH) a použité show příkazy,
-- přehled splnění zadání, závěr, seznam zkratek, obrázků a tabulek.
+- závěr, seznam zkratek, obrázků a tabulek.
 
 ---
 
