@@ -39,7 +39,8 @@ LANetwork/
 │   ├── R1_running-config.txt                      ← výsledná konfigurace R1 (show run)
 │   └── S1_running-config.txt                      ← výsledná konfigurace S1 (show run)
 ├── dokumentace/
-│   └── BPSW_Semestralni_prace_Daniel_Svoboda.docx ← písemná dokumentace práce
+│   ├── BPSW_Semestralni_prace_Daniel_Svoboda.docx ← písemná dokumentace práce (Word)
+│   └── BPSW_Semestralni_prace_Daniel_Svoboda.pdf  ← stejná dokumentace v PDF
 ├── obrazky/                                       ← schémata pro README a dokumentaci
 └── zadani/
     ├── BPSW_Zadani_semestralni_prace.pdf          ← zadání od vyučujícího
